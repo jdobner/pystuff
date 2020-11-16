@@ -6,7 +6,6 @@ import math
 from multiprocessing.pool import Pool
 
 
-
 def config_logging():
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
@@ -17,14 +16,8 @@ def config_logging():
     root.addHandler(handler)    
 
 
-
-def do_sleep(sleep_time):
-    logging.info(f"Sleeping {sleep_time} seconds")
-    time.sleep(1)
-    time.sleep(sleep_time - 1)
-    logging.info("done sleeping...")
-
-def do_cpu_intesive():
+def do_cpu_intesive(i):
+    threading.currentThread().setName(f"cpu-{i}")
     i = 100_000_000
     start = time.perf_counter()
     logging.info(f"starting {i} iterations")
@@ -37,25 +30,21 @@ def do_cpu_intesive():
 
 
 config_logging()
-start = time.perf_counter()
-threads = []
 
-for x in range(2):
-    t = threading.Thread(target=do_cpu_intesive, name=f'cpu-{x}')
-    t.start()
-    threads.append(t)
+if __name__ == '__main__':
 
-for sec in range(1,6):
-    t = threading.Thread(target=do_sleep, args=[sec], name=f"slp-{sec}")
-    t.start()
-    threads.append(t)
+    start = time.perf_counter()
+    i = [1, 2]
+    p = Pool()
 
-for thread in threads:
-    thread.join()
+    for i in range(2):
+        p.apply_async(do_cpu_intesive, [i])
 
+    p.close()
+    p.join()
 
-duration = round(time.perf_counter() - start, 2)
-logging.info(f'Finished in {duration} seconds')
+    duration = round(time.perf_counter() - start, 2)
+    logging.info(f'Finished in {duration} seconds')
 
 
 
