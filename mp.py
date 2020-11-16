@@ -29,23 +29,16 @@ def do_cpu_intesive(i):
     logging.info(f"done in {duration}")
 
 
-config_logging()
-
-if __name__ == '__main__':
-
+def do_it_all():
     start = time.perf_counter()
     i = [1, 2]
-    p = Pool()
-
-    for i in range(2):
-        p.apply_async(do_cpu_intesive, [i])
-
-    p.close()
-    p.join()
+    Pool().map(do_cpu_intesive, i)
 
     duration = round(time.perf_counter() - start, 2)
     logging.info(f'Finished in {duration} seconds')
 
-
+config_logging()
+if __name__ == '__main__':
+    do_it_all()
 
 
