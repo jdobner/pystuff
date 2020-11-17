@@ -1,6 +1,6 @@
 import multiprocessing
 
-multiprocessing.set_start_method("fork")
+#multiprocessing.set_start_method("fork")
 
 manager = multiprocessing.Manager()
 final_list = manager.list()

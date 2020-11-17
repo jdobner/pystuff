@@ -2,6 +2,10 @@ import logging
 import sys
 
 def config_logging():
+    if len(logging.root.handlers) > 0:
+        print("pass")
+        return
+
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
     handler = logging.StreamHandler(sys.stdout)
