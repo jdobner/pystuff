@@ -30,7 +30,6 @@ def init_globals(it):
 
 
 def do_it_all():
-    mp.set_start_method("spawn")
 
     start = time.perf_counter()
     i = [1, 2]
