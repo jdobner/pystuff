@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": "/Users/jdobner/.pyenv/versions/pystuff/bin/python"
+    "python.pythonPath": "/Users/jdobner/.pyenv/versions/pystuff/bin/python",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
 }
