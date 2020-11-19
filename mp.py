@@ -1,3 +1,4 @@
+from logging import logMultiprocessing
 import time
 import threading
 import logging
@@ -24,21 +25,27 @@ def do_cpu_intesive(num):
     return (num, duration)
 
 def init_globals(it):
+    logging.info("init globals")
     global iterations
     iterations = it
 
 
 
-def do_it_all():
+def do_it_all(useFork=False):
 
     start = time.perf_counter()
     i = [1, 2]
     global iterations
     iterations = Value('i', 0)
+    if useFork:
+        mp.set_start_method("fork", True)
+        with Pool(processes=2, ) as p:
+            results = p.map(func=do_cpu_intesive, iterable=i)
+    else:
+        mp.set_start_method("spawn", True)
+        with Pool(processes=2, initializer=init_globals, initargs=[iterations]) as p:
+            results = p.map(func=do_cpu_intesive, iterable=i)
 
-    with Pool(processes=2, initializer=init_globals, initargs=[iterations]) as p:
-        results = p.map(func=do_cpu_intesive, iterable=i)
-        
     duration = round(time.perf_counter() - start, 2)
     logging.info(f'Finished in {duration} seconds')
     return results
