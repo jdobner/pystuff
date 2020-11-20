@@ -32,7 +32,6 @@ def init_globals(it):
 
 
 def do_it_all(useFork=False):
-
     start = time.perf_counter()
     i = [1, 2]
     global iterations

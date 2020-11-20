@@ -1,19 +1,29 @@
 import logging
+from logging import Handler
 import sys
 
-def config_logging():
-    if len(logging.root.handlers) > 0:
+format = '%(asctime)s - %(process)d - %(threadName)s - %(message)s'
+
+
+def __config_logging():
+    root = logging.getLogger()
+    if len(root.handlers) > 0:
         print("pass")
         return
 
-    root = logging.getLogger()
     root.setLevel(logging.DEBUG)
     handler = logging.StreamHandler(sys.stdout)
     handler.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(process)d - %(threadName)s - %(message)s')
-    handler.setFormatter(formatter)
+    handler.setFormatter(logging.Formatter(format))
     root.addHandler(handler)    
     root.info("logging configured!")
 
-config_logging()
+def setprefix(prefix):
+    root = logging.getLogger()
+    handler = root.handlers[0]
+    handler.setFormatter(logging.Formatter(prefix + " " + format))
+
+__config_logging()
+
+
 
