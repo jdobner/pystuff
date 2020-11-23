@@ -3,8 +3,6 @@ import threading
 import logging
 import sys
 import math
-from multiprocessing.pool import Pool
-
 
 
 def config_logging():
@@ -17,12 +15,12 @@ def config_logging():
     root.addHandler(handler)    
 
 
-
 def do_sleep(sleep_time):
     logging.info(f"Sleeping {sleep_time} seconds")
     time.sleep(1)
     time.sleep(sleep_time - 1)
     logging.info("done sleeping...")
+
 
 def do_cpu_intesive():
     i = 100_000_000
