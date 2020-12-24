@@ -75,7 +75,7 @@ say_whee_deco()
 
 print()
 
-from decorators import repeat, timer, debug
+from decorators import repeat, timer, debug, countcalls
 
 @repeat(num_times=2)
 def say_whee2():
@@ -85,6 +85,7 @@ say_whee2()
 
 
 @repeat(num_times=3)
+@countcalls
 def greet(name, greeting="Hello"):
     print(f"{greeting} {name}")
 
@@ -98,6 +99,7 @@ print()
 
 @repeat
 @debug
+@countcalls
 def return_greeting(name):
     print("Creating greeting")
     return f"Hi {name}"

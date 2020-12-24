@@ -16,6 +16,7 @@ def debug(func):
         value = func(*args, **kwargs)
         print(f"{func.__name__!r} returned {value!r}")  # 4
         return value
+
     return wrapper_debug
 
 
@@ -31,7 +32,9 @@ def repeat(_func=None, *, num_times=2):
                 rv = func(*args, **kwargs)
                 rv_list.append(rv)
             return rv_list
+
         return wrapper_repeat
+
     if _func is None:
         return decorator_repeat
     else:
@@ -53,3 +56,26 @@ def timer(func):
     return wrapper_timer
 
 
+def countcalls(func):
+    num_calls = 0
+
+    @functools.wraps(func)
+    def wrapper_count_calls(*args, **kwargs):
+        nonlocal num_calls
+        num_calls += 1
+        print(f"Call {num_calls} of {func.__name__!r}")
+        return func(*args, **kwargs)
+
+    return wrapper_count_calls
+
+
+class CountCalls:
+    def __init__(self, func):
+        functools.update_wrapper(self, func)
+        self.func = func
+        self.num_calls = 0
+
+    def __call__(self, *args, **kwargs):
+        self.num_calls += 1
+        print(f"Call {self.num_calls} of {self.func.__name__!r}")
+        return self.func(*args, **kwargs)
