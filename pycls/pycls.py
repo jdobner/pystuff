@@ -10,9 +10,8 @@ class MyClass:
     def staticmethod():
         return 'static method called'
 
-    @staticmethod
-    def fun():
-        pass
+    def mymethod():
+        return "mymethod"
 
 mc = MyClass()
 print(mc.method())
@@ -23,5 +22,9 @@ print(MyClass.classmethod())
 f = MyClass.classmethod
 print(f())
 print(MyClass.method(mc))
-#print(MyClass().plain_method())
+try:
+    print(MyClass().mymethod())
+except Exception as e:
+    print("Exception raised:", e)
+
 print(MyClass.method("BOOOO"))
