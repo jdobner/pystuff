@@ -75,7 +75,7 @@ say_whee_deco()
 
 print()
 
-from decorators import repeat, timer, debug, countcalls
+from decorators import repeat, timer, debug, countcalls, singleton
 
 @repeat(num_times=2)
 def say_whee2():
@@ -114,5 +114,17 @@ def waste_some_time(num_times):
     return sum([i**2 for i in range(num_times)])
 
 waste_some_time(1_000_000)
+
+class MyClass:
+    pass
+
+print(f"\nMyClass() == MyClass() : {MyClass() == MyClass()}")
+
+@singleton
+class MyClass:
+    pass
+
+print(f"\nMyClass() == MyClass() : {MyClass() == MyClass()}")
+
 
 
