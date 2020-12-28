@@ -1,14 +1,11 @@
-def f():
-    print("v1")
 
-f1 = f;
-
-
-def f():
-    print("v2")
-
-f2 = f
+def f(a1):
+    print(1)
 
 
-f1()
-f2()
+def f(a1, a2):
+    print(2)
+
+
+f("")
+f(1,2)
