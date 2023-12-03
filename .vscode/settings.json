@@ -1,12 +1,8 @@
 {
-    "python.pythonPath": "/Users/jdobner/.pyenv/versions/pystuff/bin/python",
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "python.linting.mypyEnabled": true,
-    "python.languageServer": "Pylance",
-    "python.analysis.logLevel": "Warning"
 }
