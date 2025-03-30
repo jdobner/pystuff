@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
+            "mainClass": "Solution",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
