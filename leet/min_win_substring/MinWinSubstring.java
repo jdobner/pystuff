@@ -18,7 +18,6 @@ class Solution {
 
         var left = 0;
         for (var right = 0; right < s.length(); right++) {
-            
             var r = map.computeIfPresent(s.charAt(right), (k, v) -> --v);
             if (r == null) {
                 continue;
@@ -28,7 +27,7 @@ class Solution {
             if (target == 0) {
                 for (; target == 0; left++) {
                     r = map.computeIfPresent(s.charAt(left), (k, v) -> ++v);
-                    if (r > 0) {
+                    if (r != null && r > 0) {
                         target++;
                         var len = right - left + 1;
                         if (len < minLen) {
@@ -40,5 +39,16 @@ class Solution {
             }
         }
         return substring;
+    }
+
+    void test(String s, String t, String r) {
+        assert this.minWindow(s, t) == r;
+        System.out.println(s + ", " + t + " = " + r);
+    }
+
+    public static void main(String[] args) {
+        var s = new Solution();
+        s.test("ADOBECODEBANC", "ABC", "BANC");
+        
     }
 }
