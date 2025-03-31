@@ -9,6 +9,10 @@ class Solution {
         var minLen = s.length() + 1;
         var substring = "";
 
+        if (target >= minLen) {
+            return "";
+        }
+
         for (char c : t.toCharArray()) {
             var rv = map.putIfAbsent(c, 1);
             if (rv != null) {
