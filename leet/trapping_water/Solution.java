@@ -29,36 +29,6 @@ class Solution {
         return water;
     }
 
-
-    private int trap1(int[] heights) {
-        var water = 0;
-        var left = 0;
-        
-        while(left < heights.length - 1) {
-            var rightCandidate = left;
-            var right = 0;
-            while (++rightCandidate < heights.length) {
-                if (heights[rightCandidate] <= heights[left]) {
-                    right = rightCandidate;
-                    break;
-                } else if (right == 0 || heights[rightCandidate] > heights[right]) {
-                    right = rightCandidate;
-                }
-            }
-            
-            int height = Math.min(heights[left], heights[right]);
-            System.out.println("left: " + left + ", right:" + right + ", height: " + height);
-            for (int i = left + 1; i < right; i++) {
-                var add = Math.max(0, height - heights[i]);
-                water += add;
-                System.out.printf("add water pos: %d, amount: %d, total: %d\n", i, add, water);
-            }
-            left = right;
-        }
-        return water;
-
-    }
-
     public static void test(int[] heights) {
         var s = new Solution();
         var t = "";
