@@ -2,15 +2,14 @@ package leet.trapping_water;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Stack;
 
 class Solution {
 
     public int trap(int[] heights) {
-        return trap2(heights);
+        return trapWithArray(heights);
     }
 
-    private int trapIt(int[] heights) {
+    private int trapWithArray(int[] heights) {
         var water = 0;
         
         int [] maxs = new int[heights.length];
@@ -33,13 +32,13 @@ class Solution {
     }
 
 
-    private int trap2(int[] heights) {
+    private int trapWithDeque(int[] heights) {
         var water = 0;
         var maxs = new ArrayDeque<Integer>();        
         int maxHeight = -1;
-        for (int i = heights.length - 1; i >= 0; i--) {
+        for (int i = heights.length - 1; i > 0; i--) {
             if (heights[i] > maxHeight) {
-              maxs.offer(i);
+              maxs.push(i);
               maxHeight = heights[i];
             }          
         }
@@ -50,7 +49,7 @@ class Solution {
         int nextMaxHeight = 0;
         for (int i = 0; i < heights.length - 1; i++) {
             if (nextMaxHPos == i) {
-                nextMaxHPos = maxs.poll();
+                nextMaxHPos = maxs.pop();
                 nextMaxHeight = heights[nextMaxHPos];
             }
             int minHeight = Math.min(maxHeight, nextMaxHeight);
@@ -103,7 +102,7 @@ class Solution {
 
     public static void main(String[] args) {
         test(new int[] {0,1,0,2,1,0,1,3,2,1,2,1});
-        //test(new int[] {4,2,3});
+        test(new int[] {4,2,3});
     }
 
 }
