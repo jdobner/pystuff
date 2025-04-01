@@ -5,61 +5,53 @@ import java.util.Arrays;
 class Solution {
 
     public int trap(int[] heights) {
-        return trap2(heights);
+        return trapIt(heights);
     }
 
-    private int trap2(int[] heights) {
+    private int trapIt(int[] heights) {
         var water = 0;
-        var sorted = new int[heights.length][];
         
-        for (int i = 0; i < heights.length; i++) {
-            sorted[i] = new int[]{heights[i], i};
+        int [] maxs = new int[heights.length];
+        
+        int maxHeight = 0;
+        for (int i = maxs.length - 1; i >= 0; i--) {
+            maxs[i] = maxHeight;
+            maxHeight = Math.max(maxHeight, heights[i]);
         }
 
-        Arrays.sort(sorted, (v1, v2)->{
-            var diff = v1[0] - v2[0];
-            return diff != 0 ? diff : v1[1] - v2[1]; 
-        });
-
-        int c = 0;
-        var left = sorted
-        while (c > sorted.length - 1) {
-            var left = sorted[c];
-            var right = sorted[++c];
-            if (left[1] > right[1]) {
-                var tmp = left;
-                left = right;
-                right = tmp;
-            }
-            int height = Math.min(left[0], right[0]);
-            for(int i = left[1] + 1; i < right[1]; i++ ) {
-                int amount = height - heights[i];
-                water += amount;
-                System.out.printf("left: %d, i: %d,  ");
-                sorted[i] = null;
-            }
+        maxHeight = 0;
+        for (int i = 0; i < heights.length - 1; i++) {
+            int minHeight = Math.min(maxHeight, maxs[i]);
+            int add = Math.max(heights[i] - minHeight, 0);
+            water += add;
+            maxHeight = Math.max(maxHeight, heights[i]);
         }
-
         return water;
-
     }
+
 
     private int trap1(int[] heights) {
         var water = 0;
         var left = 0;
-        var maxHeight = 0;
         
         while(left < heights.length - 1) {
-            var right = left + 1;
-            for (var i = right; i < heights.length - 1 && heights[i] < heights[left]; i++) {
-                
+            var rightCandidate = left;
+            var right = 0;
+            while (++rightCandidate < heights.length) {
+                if (heights[rightCandidate] <= heights[left]) {
+                    right = rightCandidate;
+                    break;
+                } else if (right == 0 || heights[rightCandidate] > heights[right]) {
+                    right = rightCandidate;
+                }
             }
+            
             int height = Math.min(heights[left], heights[right]);
             System.out.println("left: " + left + ", right:" + right + ", height: " + height);
             for (int i = left + 1; i < right; i++) {
                 var add = Math.max(0, height - heights[i]);
                 water += add;
-                System.out.println("add water pos: " + i + ", amount: " + add + ", total: " + water);
+                System.out.printf("add water pos: %d, amount: %d, total: %d\n", i, add, water);
             }
             left = right;
         }
@@ -67,10 +59,38 @@ class Solution {
 
     }
 
-    public static void main(String[] args) {
+    public static void test(int[] heights) {
         var s = new Solution();
-        var rv = s.trap(new int[] {0,1,0,2,1,0,1,3,2,1,2,1});
+        var t = "";
+        for (int i = 0; i < heights.length; i++) {
+            if(t.length() > 0) t+= ", ";
+            t += i + ":" + heights[i];
+        }
+        System.out.println(t + "\n");
+
+        t = "";
+        int max = Arrays.stream(heights).max().orElseThrow();
+        for (int i = max; i > 0; i--) {
+            for (int h : heights) {
+                t += (h >= i ? "X" : " ");
+            }
+            t += '\n';
+        }
+        for (int i = 0; i < heights.length; i++) {
+            t+= i % 10;
+        }
+        t += '\n';
+        for (int i : heights) {
+            t += i;
+        }
+        System.out.println(t + "\n");
+
+        var rv = s.trap(heights);
         System.out.println(rv);
+    }
+
+    public static void main(String[] args) {
+        test(new int[] {0,1,0,2,1,0,1,3,2,1,2,1});
     }
 
 }
