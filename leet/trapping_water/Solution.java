@@ -6,21 +6,14 @@ import java.util.Arrays;
 class Solution {
 
     public int trap(int[] heights) {
-        return trapWithArray(heights);
-    }
-
-    private int trapWithArray(int[] heights) {
-        var water = 0;
-        
         int [] maxs = new int[heights.length];
-        
         int maxHeight = 0;
         for (int i = maxs.length - 1; i >= 0; i--) {
             maxs[i] = maxHeight;
             maxHeight = Math.max(maxHeight, heights[i]);
         }
-        //printArray(maxs);
 
+        var water = 0;
         maxHeight = 0;
         for (int i = 0; i < heights.length - 1; i++) {
             int minHeight = Math.min(maxHeight, maxs[i]);
