@@ -7,23 +7,26 @@ class Solution {
 
     public List<String> fullJustify(String[] words, int maxWidth) {
         var results = new LinkedList<String>();
-        int left = 0;
         int right = 0;
-        int size = 0;
-        int gaps = 0;
-        var buffer = new StringBuffer(maxWidth);
 
         while(right < words.length) {
-            int space = size == 0 ? 0 : 1;
-            int nextWordSize = words[right].length();
-            if (size + gaps + space + nextWordSize <= maxWidth) {
-                right++;
-                size += nextWordSize;
-                gaps += space;
-                continue;
+            int left = right;
+            var buffer = new StringBuffer(maxWidth);
+            int size = 0;
+            int gaps = 0;
+
+            while (right < words.length) {
+                int space = size == 0 ? 0 : 1;
+                int nextWordSize = words[right].length();
+                if (size + gaps + space + nextWordSize <= maxWidth) {
+                    right++;
+                    size += nextWordSize;
+                    gaps += space;
+                } else {
+                    break;
+                }
             }
-            assert size > 0;
-            var leftJustify = (right == words.length - 1 || gaps == 0);
+            var leftJustify = (right == words.length|| gaps == 0);
             int extraSpace = maxWidth - size;
             int spacesPerWord = leftJustify ? 1 : extraSpace / gaps;
             int remaining = leftJustify ? 0 : extraSpace % gaps;
@@ -35,16 +38,16 @@ class Solution {
                 }
                 buffer.append(words[i]);
             }
+            if (leftJustify) {
+                int padding = maxWidth - (size + gaps);
+                buffer.append(" ".repeat(padding));
+            }
             var line = buffer.toString();
             // assert line.length() == maxWidth : 
             //     format("len: %d, maxWidth: %d line: %s%s", line.length(), maxWidth, line, "|");
             results.add(line);
-            buffer.setLength(0);
-            left = right;
-            size = 0;
-            gaps = 0;
         }
-        printResults(maxWidth, results);
+        //printResults(maxWidth, results);
         return results;
         
     }
@@ -66,7 +69,9 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        var results = test(new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16);
+        test(new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16);
+        test(new String[]{"This", "is", "an", "example", "of", "text", "justi fy."}, 16);
+        test(new String[]{"This", "is", "an", "example", "of", "text", "justification,", "aha!"}, 16);
         
     }
 
