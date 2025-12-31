@@ -8,6 +8,49 @@
             "type": "java",
             "name": "Solution",
             "request": "launch",
+            "mainClass": "leet.trapping_water.Solution",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
+            "type": "java",
+            "name": "MinWinSubstringv2",
+            "request": "launch",
+            "mainClass": "leet.min_win_substring_v2.Solution",
+            "vmArgs": "-ea",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
+            "type": "java",
+            "name": "Solution2",
+            "request": "launch",
+            "mainClass": "leet.min_win_substring_v2.Solution2",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
+            "mainClass": "leet.min_win_substring_v2.Solution",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
+            "mainClass": "leet.min_win_substring.Solution",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
+            "mainClass": "leet.simplifypath.Solution",
+            "projectName": "pystuff_edaf80d6"
+        },
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
             "mainClass": "Solution",
             "projectName": "pystuff_edaf80d6"
         },
